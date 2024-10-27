@@ -2,13 +2,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./project-details.module.css";
-import Navbar from "../navbar/navbar";
-import Settings from "../settings/settings";
-import PromptTemplateCard from "../prompt-template-card/prompt-template-card";
-import ConfirmationPopup from "../delete-confirmation/delete-confirmation";
-import CreatePromptTemplatePopup from "../create-prompt-template-popup/create-prompt-template-popup";
+import Navbar from "../../shared/navbar/navbar";
+import Settings from "../../shared/settings/settings";
+import PromptTemplateCard from "../../prompt/prompt-template-card/prompt-template-card";
+import ConfirmationPopup from "../../shared/delete-confirmation/delete-confirmation";
+import CreatePromptTemplatePopup from "../../prompt/create-prompt-template-popup/create-prompt-template-popup";
 import { toast } from "react-toastify";
-import { API_BASE_URL } from "../../config";
+import { API_BASE_URL } from "../../../config";
 import { ChevronUp, ChevronDown, Terminal, SquareFunction, Edit, Trash2 } from "lucide-react";
 
 interface IPromptTemplate {

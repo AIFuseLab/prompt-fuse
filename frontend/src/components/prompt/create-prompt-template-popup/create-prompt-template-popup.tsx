@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./create-prompt-template-popup.module.css";
 import { toast } from "react-toastify";
-import { API_BASE_URL } from "../../config";
+import { API_BASE_URL } from "../../../config";
 
 interface PromptTemplate {
   name: string;

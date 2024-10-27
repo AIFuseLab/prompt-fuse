@@ -3,11 +3,11 @@ import axios from "axios";
 import styles from "./main.module.css";
 import { useNavigate } from "react-router-dom";
 import { PlusCircle } from "lucide-react";
-import ProjectPopup from "./project-popup/project-popup";
-import ConfirmationPopup from "./delete-confirmation/delete-confirmation";
-import ProjectCard from "./project-card/project-card";
-import Navbar from "./navbar/navbar";
-import Settings from "./settings/settings";
+import ProjectPopup from "./project/project-popup/project-popup";
+import ConfirmationPopup from "./shared/delete-confirmation/delete-confirmation";
+import ProjectCard from "./project/project-card/project-card";
+import Navbar from "./shared/navbar/navbar";
+import Settings from "./shared/settings/settings";
 import { toast } from "react-toastify";
 import { API_BASE_URL } from "../config";
 

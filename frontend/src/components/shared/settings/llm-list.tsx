@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { API_BASE_URL } from '../../config';
+import { API_BASE_URL } from '../../../config';
 
 interface LLM {
   id: string;
@@ -29,7 +29,6 @@ const LLMList: React.FC = () => {
       const response = await axios.get<LLM[]>(`${API_BASE_URL}/llms`);
       setLLMs(response.data);
       setLoading(false);
-      toast.success('LLMs fetched successfully');
     } catch (error: any) {
       toast.error(error?.response?.data?.detail);
       setError('Failed to fetch LLMs');

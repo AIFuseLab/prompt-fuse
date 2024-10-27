@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./create-prompt-popup.module.css";
 import { toast } from "react-toastify";
-import { API_BASE_URL } from "../../config";
+import { API_BASE_URL } from "../../../config";
 import { encode } from 'gpt-tokenizer'
 
 interface Prompt {
@@ -57,7 +57,6 @@ function CreatePromptPopup({
       try {
         const response = await axios.get<LLM[]>(`${API_BASE_URL}/llms`);
         setAvailableLLMs(response.data);
-        toast.success('LLMs fetched successfully');
       } catch (error: any) {
         toast.error(error?.response?.data?.detail);
       }

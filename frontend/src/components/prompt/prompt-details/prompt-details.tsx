@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styles from "./prompt-details.module.css";
-import Navbar from "../navbar/navbar";
-import Settings from "../settings/settings";
-import { API_BASE_URL } from "../../config";
+import Navbar from "../../shared/navbar/navbar";
+import Settings from "../../shared/settings/settings";
+import { API_BASE_URL } from "../../../config";
 import CreatePromptPopup from "../create-prompt-popup/create-prompt-popup";
 import axios from "axios";
 import { toast } from "react-toastify";
-import ConfirmationPopup from "../delete-confirmation/delete-confirmation";
+import ConfirmationPopup from "../../shared/delete-confirmation/delete-confirmation";
 import PromptCard from "../prompt-card/prompt-card";
 
 interface IPrompt {

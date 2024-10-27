@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Edit, Eye, ChevronDown, Trash2, ChevronUp } from "lucide-react";
 import styles from "./prompt-card.module.css";
-import CreateTestPopup from "../create-test-popup/create-test-popup";
+import CreateTestPopup from "../../test/create-test-popup/create-test-popup";
 import axios from "axios";
-import { API_BASE_URL } from "../../config";
-import ConfirmationPopup from "../delete-confirmation/delete-confirmation";
+import { API_BASE_URL } from "../../../config";
+import ConfirmationPopup from "../../shared/delete-confirmation/delete-confirmation";
 import { toast } from "react-toastify";
 interface Prompt {
   id: number;

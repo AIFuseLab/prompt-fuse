@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./create-test-popup.module.css";
-import { API_BASE_URL } from "../../config";
+import { API_BASE_URL } from "../../../config";
 import { encode } from "gpt-tokenizer";
 import { toast } from "react-toastify";
 import { useParams } from 'react-router-dom';
