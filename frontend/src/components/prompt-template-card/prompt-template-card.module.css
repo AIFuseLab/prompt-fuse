@@ -1,0 +1,135 @@
+.promptCard {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  width: 80% !important;
+}
+
+.promptName {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.promptDescription,
+.promptText,
+.promptNotes,
+.promptVersion,
+.promptModel {
+  margin-bottom: 8px;
+}
+
+.promptVersion,
+.promptModel {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.centeredCard {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.promptContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.promptInfo {
+  flex: 1;
+}
+
+.promptActions {
+  display: flex;
+  gap: 10px;
+}
+
+.promptItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background-color: #ffffff;
+  transition: box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.promptItem:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.promptDetails {
+  flex: 1;
+}
+
+.promptName {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.promptDescription {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.promptNotes {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+
+.promptVersion,
+.promptModel {
+  font-size: 0.8rem;
+  color: #999;
+  margin-bottom: 0.25rem;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.editButton,
+.analyticsButton,
+.deleteButton {
+  color: black;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+.deleteButton:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.editButton {
+  color: #333;
+}
+
+.editButton:hover {
+  background-color: #333;
+  color: white;
+}
+
+
+.analyticsButton {
+  color: #333;
+}
+
+.analyticsButton:hover {
+  background-color: lightblue;
+  color: white;
+}

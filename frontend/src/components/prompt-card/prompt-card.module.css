@@ -1,0 +1,317 @@
+.promptCard {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  width: 80% !important;
+}
+
+.promptName {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.promptDescription,
+.promptText,
+.promptNotes,
+.promptVersion,
+.promptModel {
+  margin-bottom: 8px;
+}
+
+.promptVersion,
+.promptModel {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.centeredCard {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.promptContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.promptInfo {
+  flex: 1;
+}
+
+.promptActions {
+  display: flex;
+  gap: 10px;
+}
+
+.promptItem {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  /* align-items: center; */
+  padding: 1rem;
+  /* border: 1px solid #e0e0e0; */
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background-color: #ffffff;
+  transition: box-shadow 0.3s ease;
+}
+
+/* .promptItem:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+} */
+
+.promptDetails {
+  flex: 1;
+}
+
+.promptName {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.promptDescription {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.promptNotes {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+
+.promptVersion,
+.promptModel {
+  font-size: 0.8rem;
+  color: #999;
+  margin-bottom: 0.25rem;
+}
+
+.buttonGroup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.editButton,
+.deleteButton {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.editButton {
+  color: #333;
+}
+
+.editButton:hover {
+  background-color: #333;
+  color: white;
+}
+
+.deleteButton {
+  color: black;
+}
+
+.deleteButton:hover {
+  background-color: #ff4d4f;
+  color: white;
+}
+
+.carousel {
+  /* width: 100%; */
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 1px;
+  background-color: darkgray;
+  margin: auto;
+  margin-bottom: 2rem;
+}
+
+.carouselContainer {
+  margin-bottom: 1rem;
+}
+
+.promptContainer {
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background-color: #ffffff;
+  transition: box-shadow 0.3s ease;
+}
+
+.promptContainer:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.testItem {
+  display: flex;
+  flex-direction: column;
+  background-color: #f9f9f9;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.userInput {
+  flex: 1;
+}
+
+.llmResponse {
+  flex: 4;
+}
+
+/* New */
+
+.testItem {
+  display: flex;
+  flex-direction: column;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.deleteButton {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.llmResponse{
+  margin-top: .5rem;
+}
+
+.userInput,
+.llmResponse {
+  background-color: #fff;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.llmResponse p {
+  margin: 0;
+}
+
+.separator {
+  margin: 0.5rem 0;
+  border: none;
+  height: 1px;
+  background-color: #ddd;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.5rem;
+}
+
+.metricItem {
+  background-color: #ffffff;
+  padding: 0.5rem;
+  border-radius: 4px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  font-size: 0.875rem;
+}
+
+.metricItem span {
+  font-weight: bold;
+}
+
+.showMore {
+  color: blueviolet;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+  margin-left: 0.5rem;
+}
+
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 400px;
+  max-height: 400px;
+  margin: auto;
+}
+
+.testImage {
+  max-width: 400px;
+  max-height: 400px;
+  border-radius: 4px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+  margin: auto;
+}
+
+
+.viewImageButton {
+  color: blueviolet;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+  margin-left: 0.5rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+
+.viewButton {
+  color: black;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+  margin-left: 0.5rem;
+}
+
+.viewButton:hover {
+  background-color: lightblue;
+  color: white;
+}
