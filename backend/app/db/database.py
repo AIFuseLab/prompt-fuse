@@ -16,6 +16,6 @@ def get_db():
     try:
         yield db
     except Exception as e:
-        print(f"Database error: {str(e)}")  # Add this line for debugging
+        print(f"Database error: {str(e)}")
     finally:
         db.close()

@@ -19,7 +19,7 @@ const Navbar: React.FC<NavbarProps> = ({
   return (
     <nav className={styles.navbar}>
       <h1 className={styles.title} onClick={() => navigate(redirectTo)}>
-        {title || "Promptify"}
+        {title || "Prompt Fuse"}
       </h1>
       <button className={styles.settingsButton} onClick={onSettingsClick}>
         <Settings className="h-5 w-5" color="white" />

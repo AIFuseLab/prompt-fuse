@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { API_BASE_URL } from '../../../config';
+import styles from './settings.module.css';
+import { Edit2, Trash2 } from "lucide-react";
 
 interface LLM {
   id: string;
@@ -77,7 +79,6 @@ const LLMList: React.FC = () => {
 
   return (
     <div>
-      <h3>LLM List</h3>
       {llms.length === 0 ? (
         <p>No LLMs found.</p>
       ) : (
@@ -88,26 +89,31 @@ const LLMList: React.FC = () => {
                 <form onSubmit={(e) => {
                   e.preventDefault();
                   updateLLM(editingLLM);
-                }}>
-                  <input name="name" value={editingLLM.name} onChange={handleChange} />
-                  <input name="description" value={editingLLM.description || ''} onChange={handleChange} />
-                  <input name="llm_model_id" value={editingLLM.llm_model_id || ''} onChange={handleChange} />
-                  <input name="aws_region" value={editingLLM.aws_region || ''} onChange={handleChange} />
-                  <input name="access_key" value={editingLLM.access_key || ''} onChange={handleChange} />
-                  <input name="secret_access_key" value={editingLLM.secret_access_key || ''} onChange={handleChange} />
-                  <input name="selected" type="checkbox" checked={editingLLM.selected || false} onChange={handleChange} />
-                  <button type="submit">Save</button>
-                  <button onClick={() => setEditingLLM(null)}>Cancel</button>
+                }} className={styles.form}>
+                  <input name="name" value={editingLLM.name} onChange={handleChange} className={styles.input} />
+                  <input name="description" value={editingLLM.description || ''} onChange={handleChange} className={styles.input} />
+                  <input name="llm_model_id" value={editingLLM.llm_model_id || ''} onChange={handleChange} className={styles.input} />
+                  <div className={styles.buttonContainer}>
+                    <button type="submit">Save</button>
+                    <button onClick={() => setEditingLLM(null)}>Cancel</button>
+                  </div>
                 </form>
               ) : (
-                <>
-                  <strong>{llm.name}</strong>
-                  {llm.description && <p>{llm.description}</p>}
-                  {llm.llm_model_id && <p>Model ID: {llm.llm_model_id}</p>}
-                  {llm.aws_region && <p>AWS Region: {llm.aws_region}</p>}
-                  <button onClick={() => handleEdit(llm)}>Edit</button>
-                  <button onClick={() => deleteLLM(llm.id)}>Delete</button>
-                </>
+                <div className={styles.llmItem}>
+                  <strong className={styles.llmName}>{llm.name}</strong>
+                  {llm.description && <p className={styles.llmDescription}>{llm.description}</p>}
+                  {llm.llm_model_id && <p className={styles.llmModelId}>Model ID: {llm.llm_model_id}</p>}
+                  {llm.aws_region && <p className={styles.llmAwsRegion}>AWS Region: {llm.aws_region}</p>}
+                  <div className={styles.buttonContainerList}>
+                    <button onClick={() => handleEdit(llm)}>
+                      <Edit2 className="h-5 w-5 mr-2" style={{ color: 'black' }} />
+                    </button>
+                    <button onClick={() => deleteLLM(llm.id)}>
+                      <Trash2 className="h-5 w-5 mr-2" style={{ color: 'black' }} />
+                    </button>
+                  </div>
+                  <hr className={styles.hr} />
+                </div>
               )}
             </li>
           ))}

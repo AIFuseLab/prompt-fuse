@@ -47,20 +47,6 @@ function CreateTestPopup({ isOpen, onClose, prompts }: CreateTestPopupProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
 
-  const [llmTools, setLLMTools] = useState<LLMTool[]>([]);
-
-  const fetchLLMTools = async (projectId: string) => {
-    const response = await fetch(`${API_BASE_URL}/llm-tools/${projectId}`);
-    const data = await response.json();
-    setLLMTools(data);
-  };
-
-  useEffect(() => {
-    if (projectId) {
-      fetchLLMTools(projectId);
-    }
-  }, [projectId]);
-
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -183,17 +169,6 @@ function CreateTestPopup({ isOpen, onClose, prompts }: CreateTestPopupProps) {
                 />
                 Image
               </label>
-              <label>
-                <input
-                  type="radio"
-                  name="input_type"
-                  value="tools"
-                  checked={test.input_type === "tools"}
-                  onChange={handleInputTypeChange}
-                  className={styles.inputType}
-                />
-                Tools
-              </label>
             </div>
           </div>
           <div>
@@ -241,20 +216,6 @@ function CreateTestPopup({ isOpen, onClose, prompts }: CreateTestPopupProps) {
                 onChange={(e) => setImageFile(e.target.files?.[0] || null)}
                 required
               />
-            </div>
-          ) : test.input_type === "tools" ? (
-            <div>
-              <small>LLM Tools</small>
-              <div className={styles.toolSelectContainer}>
-                <select name="tool_id" className={styles.inputSelect} multiple>
-                  <option value="all">All Tools</option>
-                  {llmTools.map((tool) => (
-                    <option key={tool.id} value={tool.id}>
-                      {tool.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
             </div>
           ) : null}
           <div>

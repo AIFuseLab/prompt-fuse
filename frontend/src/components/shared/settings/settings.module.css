@@ -33,11 +33,12 @@
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+  width: 100%;
 }
 
 .button {
   padding: 0.5rem 1rem;
-  background-color: #007bff;
+  background-color: #333;
   color: white;
   border: none;
   border-radius: 4px;
@@ -151,7 +152,7 @@
   background-color: white;
   border-radius: 8px;
   width: 800px; /* Fixed width */
-  height: 600px; /* Fixed height */
+  height: 700px; /* Fixed height */
   overflow: hidden;
 }
 
@@ -259,4 +260,67 @@
 .deleteButton {
   background-color: #dc3545;
   color: white;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.buttonCancel {
+  background-color: #c82333;
+  padding: 0.5rem 1rem;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+.llmItem {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+}
+
+
+.hr {
+  width: 100%;
+}
+
+.llmName {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.llmDescription {
+  font-size: 1rem;
+  color: #666;
+}
+
+.llmModelId {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+
+.llmAwsRegion {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+.buttonContainerList{
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.hr{
+  margin-top: 1rem;
 }

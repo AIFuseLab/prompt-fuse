@@ -16,7 +16,7 @@ class Project(Base):
     description = Column(Text)
     
     prompt_templates = relationship("PromptTemplate", back_populates="project")
-    llm_tools = relationship("LLMTool", back_populates="project")
+    # llm_tools = relationship("LLMTool", back_populates="project")
 
 class ProjectException(HTTPException):
     def __init__(self, status_code: int, error_key: str, detail: str = None):
