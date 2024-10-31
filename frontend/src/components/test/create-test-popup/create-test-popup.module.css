@@ -1,0 +1,163 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  width: 100%;
+  max-width: 500px;
+  min-height: 450px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: black;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  margin-bottom: 4px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.textareaInput{
+  width: 100%;
+  margin-bottom: 4px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  min-height: 100px;
+  max-height: 100px;
+}
+
+.uploadImageInput{
+  width: 100%;
+  margin-bottom: 4px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  min-height: 106px;
+  max-height: 106px;
+}
+
+.description{
+    margin-top: 6px;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.cancelButton,
+.createButton {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cancelButton {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  margin-right: 8px;
+}
+
+.cancelButton:hover {
+  background-color: #f0f0f0;
+}
+
+.createButton {
+  background-color: black;
+  color: white;
+  border: none;
+}
+
+.createButton:hover {
+  background-color: #333;
+}
+
+
+.promptTextContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+
+.inputTypeContainer{
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputType{
+  margin-right: 4px;
+}
+
+
+
+
+.inputSelect {
+  width: 100%;
+  margin-bottom: 4px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #fff;
+  height: auto; 
+  max-height: 200px; 
+  overflow-y: auto; 
+}
+
+/* Add custom scrollbar styling for a better experience */
+.inputSelect::-webkit-scrollbar {
+  width: 8px;
+}
+
+.inputSelect::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius: 4px;
+}
+
+.inputSelect::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.inputSelect::-webkit-scrollbar-thumb:hover {
+  background-color: #999;
+}
+
+.spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 0.2em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spinner-rotate 1s linear infinite;
+}
