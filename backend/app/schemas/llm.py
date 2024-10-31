@@ -10,7 +10,6 @@ class LLMCreate(BaseModel):
     secret_access_key: Optional[str] = None
     llm_model_id: Optional[str] = None
     aws_region: Optional[str] = None
-    selected: Optional[bool] = False
 
 
 class LLMUpdate(BaseModel):
@@ -20,7 +19,6 @@ class LLMUpdate(BaseModel):
     secret_access_key: Optional[str] = None
     llm_model_id: Optional[str] = None
     aws_region: Optional[str] = None
-    selected: Optional[bool] = False
 
 
 class LLMResponse(BaseModel):
@@ -28,7 +26,6 @@ class LLMResponse(BaseModel):
     name: str
     description: Optional[str]
     llm_model_id: Optional[str]
-    selected: Optional[bool]
 
     class Config:
         from_attributes = True

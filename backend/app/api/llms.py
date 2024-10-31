@@ -12,6 +12,7 @@ from ..settings.settings import settings
 from ..schemas.llm import ImageConversationInput
 from botocore.exceptions import ClientError
 
+
 router = APIRouter()
 
 
@@ -21,6 +22,7 @@ def create_llm(llm: LLMCreate, db: Session = Depends(get_db)):
         existing_llm = db.query(LLM).filter(LLM.name == llm.name).first()
         if existing_llm:
             raise LLMException(status_code=400, error_key="LLM_NAME_EXISTS")
+        
 
         db_llm = LLM(**llm.dict())
         db.add(db_llm)
@@ -100,6 +102,7 @@ def update_llm(llm_id: str, llm: LLMUpdate, db: Session = Depends(get_db)):
 def list_llms(db: Session = Depends(get_db)):
     try:
         llms = db.query(LLM).all()
+        
         return [LLMResponse.from_orm(llm) for llm in llms]
     except sqlalchemy.exc.SQLAlchemyError as e:
         raise LLMException(status_code=500, error_key="DATABASE_ERROR")

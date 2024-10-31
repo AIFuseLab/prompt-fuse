@@ -14,7 +14,6 @@ class LLM(Base):
     secret_access_key = Column(String(255))
     llm_model_id = Column(String(255))
     aws_region = Column(String(100))
-    selected = Column(Boolean, default=False)
     prompts = relationship("Prompt", back_populates="llm")
 
 class LLMException(Exception):

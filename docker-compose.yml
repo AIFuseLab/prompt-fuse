@@ -9,7 +9,8 @@ services:
     depends_on:
       - db
     environment:
-      - DATABASE_URL=postgresql://postgres:P@ss01409@db:5432/prompt_manager
+      - DATABASE_URL=postgresql://postgres:P@ss01409@db:5432/prompt_fuse
+    entrypoint: ["./wait-for-it.sh", "db:5432", "--", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
   frontend:
     build:
@@ -24,10 +25,15 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: P@ss01409
-      POSTGRES_DB: prompt_manager
+      POSTGRES_DB: prompt_fuse
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./backend/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres_data:

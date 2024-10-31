@@ -1,3 +1,17 @@
+-- Switch to default database first
+\c postgres;
+
+-- Drop and create the database
+DROP DATABASE IF EXISTS prompt_fuse;
+CREATE DATABASE prompt_fuse;
+
+-- Connect to the new database
+\c prompt_fuse;
+
+-- Create the projects table
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+
 -- Create the projects table
 CREATE TABLE projects (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
