@@ -30,12 +30,8 @@ Prompt Fuse is an open-source tool for managing, testing, and automatically vers
 ### Docker Installation
 
 1. Install [Docker](https://www.docker.com/products/docker-desktop/)
-2. Run the following commands:
+2. Run the following command:
 ```bash
-# Remove any existing containers and volumes
-docker-compose down -v
-
-# Build the images
 docker-compose up --build
 ```
 
