@@ -10,12 +10,6 @@ SQLALCHEMY_DATABASE_URL = f"postgresql://postgres:{password}@db:5432/prompt_fuse
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# inspector = inspect(engine)
-# columns = inspector.get_columns('llm')
-# # Print the column details
-# for column in columns:
-#     print(f"Column: {column['name']}, Type: {column['type']}, Nullable: {column['nullable']}, Default: {column['default']}")
-
 Base = declarative_base()
 
 def get_db():
