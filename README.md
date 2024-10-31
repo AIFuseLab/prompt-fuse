@@ -31,6 +31,7 @@ Prompt Fuse is an open-source tool for managing, testing, and automatically vers
 
 1. Install [Docker](https://www.docker.com/products/docker-desktop/)
 2. Run the following command:
+
 ```bash
 docker-compose up --build
 ```
