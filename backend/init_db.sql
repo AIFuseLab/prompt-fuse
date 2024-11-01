@@ -11,6 +11,12 @@ CREATE DATABASE prompt_fuse;
 -- Create the projects table
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+DROP TABLE IF EXISTS projects;
+DROP TABLE IF EXISTS llm;
+DROP TABLE IF EXISTS prompt_template;
+DROP TABLE IF EXISTS prompts;
+DROP TABLE IF EXISTS tests;
+DROP TABLE IF EXISTS test_prompt_association;
 
 -- Create the projects table
 CREATE TABLE projects (
@@ -78,6 +84,11 @@ CREATE TABLE test_prompt_association (
     test_id UUID REFERENCES tests(id) ON DELETE CASCADE,
     prompt_id UUID REFERENCES prompts(id) ON DELETE CASCADE,
     PRIMARY KEY (test_id, prompt_id),
-    prompt_tokens VARCHAR(255) DEFAULT '0' NOT NULL,
-    user_input_tokens VARCHAR(255) DEFAULT '0' NOT NULL
+    llm_response TEXT,
+    input_tokens INTEGER,
+    output_tokens INTEGER,
+    total_tokens INTEGER,
+    latency_ms NUMERIC,
+    prompt_tokens INTEGER,
+    user_input_tokens INTEGER
 );

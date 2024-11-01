@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Text, DateTime, ForeignKey, Table, LargeBinary
+from sqlalchemy import Column, String, Text, DateTime, ForeignKey, Table, LargeBinary, Integer
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from ..db.database import Base
@@ -9,12 +9,12 @@ test_prompt_association = Table('test_prompt_association', Base.metadata,
     Column('test_id', UUID(as_uuid=True), ForeignKey('tests.id')),
     Column('prompt_id', UUID(as_uuid=True), ForeignKey('prompts.id')),
     Column('llm_response', Text),
-    Column('input_tokens', Text),
-    Column('output_tokens', Text),
-    Column('total_tokens', Text),
-    Column('latency_ms', Text),
-    Column('prompt_tokens', Text),
-    Column('user_input_tokens', Text)
+    Column('input_tokens', Integer),
+    Column('output_tokens', Integer),
+    Column('total_tokens', Integer),
+    Column('latency_ms', Integer),
+    Column('prompt_tokens', Integer),
+    Column('user_input_tokens', Integer)
 )
 
 class Test(Base):

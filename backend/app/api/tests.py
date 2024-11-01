@@ -26,38 +26,35 @@ router = APIRouter()
 async def create_test(test: TestCreate, db: Session = Depends(get_db)):
     try:
         db_test = Test(test_name=test.test_name, user_input=test.user_input)
+
+
         db.add(db_test)
         db.flush()
 
         prompts = db.query(Prompt).filter(Prompt.id.in_(test.prompt_ids)).all()
+
+
         if len(prompts) != len(test.prompt_ids):
             raise TestException(status_code=400, error_key="INVALID_PROMPT_IDS")
 
         for prompt in prompts:
             
-            print(f"prompt.prompt: {prompt.prompt}")
-
             conversation_input = ConversationInput(
                 llm_id=prompt.llm_id,
                 user_input=test.user_input,
                 prompt=prompt.prompt,
             )
 
-            print(f"conversation_input: {conversation_input}")
             
             llm_response = await converse_with_llm(conversation_input, db)
 
-            print(f"llm_response: {llm_response}")
 
             try:
-                print(f"inserting association")
                 association = db.execute(
                     test_prompt_association.insert().values(
                         test_id=db_test.id,
                         prompt_id=prompt.id,
-                        llm_response=llm_response["response"]["output"]["message"][
-                            "content"
-                        ][0]["text"],
+                        llm_response=llm_response["response"]["output"]["message"]["content"][0]["text"],
                         input_tokens=llm_response["response"]["usage"]["inputTokens"],
                         output_tokens=llm_response["response"]["usage"]["outputTokens"],
                         total_tokens=llm_response["response"]["usage"]["totalTokens"],
@@ -66,7 +63,7 @@ async def create_test(test: TestCreate, db: Session = Depends(get_db)):
                         user_input_tokens=gpt3_tokenizer.count_tokens(test.user_input),
                     )
                 )
-                print(f"association")
+                print(f"Association inserted")
                 db.flush()
             except Exception as e:
                 raise LLMException(
@@ -151,7 +148,7 @@ async def create_test(
             )
             llm_response = await converse_with_llm_image(img_conversation_input, db)
 
-
+            
             try:
                 association = db.execute(
                     test_prompt_association.insert().values(

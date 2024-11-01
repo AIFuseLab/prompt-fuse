@@ -141,6 +141,12 @@ async def converse_with_llm(
 ):
     try:
         llm = db.query(LLM).filter(LLM.id == conversation_input.llm_id).first()
+        print(f"--------------------------------")
+        print(f"llm: {llm.id}")
+        print(f"llm.access_key: {llm.access_key}")
+        print(f"llm.secret_access_key: {llm.secret_access_key}")
+        print(f"llm.aws_region: {llm.aws_region}")
+        print(f"llm.llm_model_id: {llm.llm_model_id}")
 
         if llm is None:
             raise LLMException(status_code=404, error_key="LLM_NOT_FOUND")
