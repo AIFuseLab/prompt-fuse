@@ -56,8 +56,8 @@ uvicorn app.main:app --reload
 ```bash
 cd backend
 psql -d prompt_fuse -f init_db.sql
-update database.py with your postgres credentials
 ```
+update database.py with your postgres credentials
 
 ## Roadmap (v1.0.0)
 
