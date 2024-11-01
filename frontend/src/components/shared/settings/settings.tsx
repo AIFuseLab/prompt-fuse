@@ -106,27 +106,27 @@ const Settings: React.FC<SettingsProps> = ({ isOpen, onClose }) => {
                 }} className={styles.form}>
                   <div>
                     <small>Name</small><br />
-                    <input name="name" value={llmName} title='Name' onChange={(e) => setLlmName(e.target.value)} className={styles.input} />
+                    <input name="name" value={llmName} title='Name' onChange={(e) => setLlmName(e.target.value)} className={styles.input} required />
                   </div>
                   <div>
                     <small>Description</small><br />
-                    <input name="description" value={llmDescription} title='Description' onChange={(e) => setLlmDescription(e.target.value)} className={styles.input} />
+                    <input name="description" value={llmDescription} title='Description' onChange={(e) => setLlmDescription(e.target.value)} className={styles.input} required />
                   </div>
                   <div>
                     <small>LLM Model ID</small><br />
-                    <input name="llm_model_id" value={llmModelId} title='LLM Model ID' onChange={(e) => setLlmModelId(e.target.value)} className={styles.input} />
+                    <input name="llm_model_id" placeholder='anthropic.claude-3-5-sonnet-20240620-v1:0' value={llmModelId} title='LLM Model ID' onChange={(e) => setLlmModelId(e.target.value)} className={styles.input} required />
                   </div>
                   <div>
                     <small>AWS Region</small><br />
-                    <input name="aws_region" value={awsRegion} title='AWS Region' onChange={(e) => setAwsRegion(e.target.value)} className={styles.input} />
+                    <input name="aws_region" value={awsRegion} title='AWS Region' onChange={(e) => setAwsRegion(e.target.value)} className={styles.input} required />
                   </div>
                   <div>
                     <small>Access Key</small><br />
-                    <input name="access_key" value={accessKey} title='Access Key' onChange={(e) => setAccessKey(e.target.value)} className={styles.input} />
+                    <input name="access_key" value={accessKey} title='Access Key' onChange={(e) => setAccessKey(e.target.value)} className={styles.input} required />
                   </div>
                   <div>
                     <small>Secret Access Key</small><br />
-                    <input name="secret_access_key" value={secretAccessKey} title='Secret Access Key' onChange={(e) => setSecretAccessKey(e.target.value)} className={styles.input} />
+                    <input name="secret_access_key" value={secretAccessKey} title='Secret Access Key' onChange={(e) => setSecretAccessKey(e.target.value)} className={styles.input} required />
                   </div>
                   {/* <input name="selected" type="checkbox" checked={false} onChange={() => { }} /> */}
                   <div className={styles.buttonContainer}>

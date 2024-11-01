@@ -95,7 +95,7 @@ function CreatePromptTemplatePopup({
   return (
     <div className={styles.overlay}>
       <div className={styles.popup}>
-        <h2 className={styles.title}>Create Prompt Playground</h2>
+        <h2 className={styles.title}>Create Prompt Template</h2>
         <form
           onSubmit={editingPrompt ? updatePromptTemplate : savePromptTemplate}
         >

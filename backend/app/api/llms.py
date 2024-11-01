@@ -8,10 +8,8 @@ from ..exceptions.error_messages import ErrorMessages
 from typing import List
 import uuid
 import boto3
-from ..settings.settings import settings
 from ..schemas.llm import ImageConversationInput
 from botocore.exceptions import ClientError
-
 
 router = APIRouter()
 
@@ -23,7 +21,6 @@ def create_llm(llm: LLMCreate, db: Session = Depends(get_db)):
         if existing_llm:
             raise LLMException(status_code=400, error_key="LLM_NAME_EXISTS")
         
-
         db_llm = LLM(**llm.dict())
         db.add(db_llm)
         db.commit()
@@ -144,15 +141,23 @@ async def converse_with_llm(
 ):
     try:
         llm = db.query(LLM).filter(LLM.id == conversation_input.llm_id).first()
+        print(f"--------------------------------")
+        print(f"llm: {llm.id}")
+        print(f"llm.access_key: {llm.access_key}")
+        print(f"llm.secret_access_key: {llm.secret_access_key}")
+        print(f"llm.aws_region: {llm.aws_region}")
+        print(f"llm.llm_model_id: {llm.llm_model_id}")
+
         if llm is None:
             raise LLMException(status_code=404, error_key="LLM_NOT_FOUND")
-
+        
         bedrock = boto3.client(
-            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+            aws_access_key_id=llm.access_key,
+            aws_secret_access_key=llm.secret_access_key,
             service_name="bedrock-runtime",
-            region_name=settings.AWS_REGION,
+            region_name=llm.aws_region,
         )
+
         try:
             response = bedrock.converse(
                 modelId=llm.llm_model_id,
@@ -202,10 +207,10 @@ async def converse_with_llm_image(
             raise LLMException(status_code=404, error_key="LLM_NOT_FOUND")
 
         bedrock = boto3.client(
-            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+            aws_access_key_id=llm.access_key,
+            aws_secret_access_key=llm.secret_access_key,
             service_name="bedrock-runtime",
-            region_name=settings.AWS_REGION,
+            region_name=llm.aws_region,
         )
 
         if conversation_input.image is None:

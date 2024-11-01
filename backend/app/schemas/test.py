@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import List, Optional, Any
 from uuid import UUID
 from datetime import datetime
-from fastapi import UploadFile, File
+from fastapi import File
 
 class TestCreate(BaseModel):
     test_name: str
@@ -21,12 +21,12 @@ class TestResponse(BaseModel):
     user_input: Optional[str] = None
     creation_date: datetime
     llm_response: Optional[str] = None
-    input_tokens: Optional[str] = None
-    output_tokens: Optional[str] = None
-    total_tokens: Optional[str] = None
-    latency_ms: Optional[str] = None
-    prompt_tokens: Optional[str] = None
-    user_input_tokens: Optional[str] = None
+    input_tokens: Optional[int] = None
+    output_tokens: Optional[int] = None
+    total_tokens: Optional[int] = None
+    latency_ms: Optional[int] = None
+    prompt_tokens: Optional[int] = None
+    user_input_tokens: Optional[int] = None
     image: Any
 
     class Config:

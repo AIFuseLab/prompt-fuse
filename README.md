@@ -52,6 +52,13 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
+**Database:**
+```bash
+cd backend
+psql -d prompt_fuse -f init_db.sql
+```
+update database.py with your postgres credentials
+
 ## Roadmap (v1.0.0)
 
 ### Core Features
@@ -64,9 +71,9 @@ uvicorn app.main:app --reload
 - Comprehensive Documentation
 - Testing Framework Implementation
 - Enhanced Logging System
+- Web Based Interface
 
 ### Infrastructure
-- Cloud Deployment Options
 - Performance Optimizations
 - Scalability Improvements
 
