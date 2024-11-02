@@ -100,10 +100,7 @@ def test_update_project_duplicate_name(client):
         f"/api/v1/project/{first_project_id}",
         json={"name": "Test Project Two", "description": "Updated Description"}
     )
-    
-    print("-----------------------------------")
-    print(update_response.json())
-    print("-----------------------------------")
+
     
     assert update_response.status_code == 400
     response_data = update_response.json()
@@ -125,3 +122,37 @@ def test_delete_project_success(client):
     # Verify project is deleted
     get_response = client.get(f"/api/v1/project/{project_id}")
     assert get_response.status_code == 404
+    
+def test_delete_project_not_found(client):
+    random_id = str(uuid.uuid4())
+    response = client.delete(f"/api/v1/project/{random_id}")
+    assert response.status_code == 404
+    
+def test_update_project_empty_name(client):
+    create_response = client.post(
+        "/api/v1/project",
+        json={"name": "Test Project", "description": "Test Description"}
+    )
+    project_id = create_response.json()["id"]
+
+    response = client.put(
+        f"/api/v1/project/{project_id}",
+        json={"name": "", "description": "Updated Description"}
+    )
+    
+    assert response.status_code == 400
+    response_data = response.json()
+    assert response_data["error_key"] == "PROJECT_NAME_EMPTY"
+    assert get_error_message("PROJECT_NAME_EMPTY") in response_data["message"]
+    
+    
+def test_create_project_empty_name(client):
+    response = client.post(
+        "/api/v1/project",
+        json={"name": "", "description": "Test Description"}
+    )
+    assert response.status_code == 400
+    response_data = response.json()
+    assert response_data["error_key"] == "PROJECT_NAME_EMPTY"
+    assert get_error_message("PROJECT_NAME_EMPTY") in response_data["message"]
+    

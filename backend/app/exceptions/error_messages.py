@@ -13,6 +13,7 @@ class ErrorMessages:
     PROJECT_GET_ERROR = "An error occurred while getting the project"
     PROJECT_DELETION_ERROR = "An error occurred while deleting the project"
     
+    PROMPT_TEMPLATE_NAME_EXISTS = "A prompt template with this name already exists"
     
     PROMPT_NAME_EXISTS = "A prompt with this name already exists"
     PROMPT_CREATION_ERROR = "An error occurred while creating the prompt"

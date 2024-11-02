@@ -4,6 +4,9 @@ from sqlalchemy.orm import relationship
 from ..db.database import Base
 import uuid
 from datetime import datetime
+from ..utils.exceptions.errors import get_error_message
+from fastapi import HTTPException
+
 
 class PromptTemplate(Base):
     __tablename__ = "prompt_template"
@@ -19,9 +22,14 @@ class PromptTemplate(Base):
     project = relationship("Project", back_populates="prompt_templates")
     prompts = relationship("Prompt", back_populates="prompt_template")
 
-class PromptTemplateException(Exception):
+class PromptTemplateException(HTTPException):
     def __init__(self, status_code: int, error_key: str, detail: str = None):
-        self.status_code = status_code
-        self.error_key = error_key
-        self.detail = detail
+        error_message = get_error_message(error_key)
+        content = {
+            "error_key": error_key,
+            "message": error_message
+        }
+        if detail is not None:
+            content["detail"] = detail
+        super().__init__(status_code=status_code, detail=content)
 

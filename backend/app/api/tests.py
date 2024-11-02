@@ -21,7 +21,6 @@ import base64
 
 router = APIRouter()
 
-
 @router.post("/test/text", response_model=TestResponse)
 async def create_test(test: TestCreate, db: Session = Depends(get_db)):
     try:

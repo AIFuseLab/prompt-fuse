@@ -31,9 +31,13 @@ class Test(Base):
 
 class TestException(Exception):
     def __init__(self, status_code: int, error_key: str, detail: str = None):
-        self.status_code = status_code
-        self.error_key = error_key
-        self.detail = get_error_message(error_key)
-        if detail:
-            self.detail = f"{self.detail}: {detail}"
+        error_message = get_error_message(error_key)
+        content = {
+            "error_key": error_key,
+            "message": error_message
+        }
+        if detail is not None:
+            content["detail"] = detail
+        super().__init__(status_code=status_code, detail=content)
+
 

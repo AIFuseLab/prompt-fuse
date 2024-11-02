@@ -17,6 +17,9 @@ router = APIRouter()
 @router.post("/project", response_model=ProjectResponse)
 def create_project(project: ProjectCreate, db: Session = Depends(get_db)):
     try:
+        if project.name is not None and not project.name.strip():
+            raise ProjectException(status_code=400, error_key="PROJECT_NAME_EMPTY")
+        
         existing_project = (
             db.query(Project).filter(Project.name == project.name).first()
         )
@@ -95,6 +98,9 @@ def update_project(
         except ValueError:
             raise ProjectException(status_code=400, error_key="INVALID_PROJECT_ID_FORMAT")
 
+        if project.name is not None and not project.name.strip():
+            raise ProjectException(status_code=400, error_key="PROJECT_NAME_EMPTY")
+        
         db_project = db.query(Project).filter(Project.id == project_uuid).first()
 
         if db_project is None:
@@ -169,12 +175,11 @@ def delete_project(project_id: str, db: Session = Depends(get_db)):
         try:
             uuid_obj = uuid.UUID(project_id)
         except ValueError:
-            raise HTTPException(status_code=400, detail="Invalid project ID format")
+            raise ProjectException(status_code=400, error_key="INVALID_PROJECT_ID_FORMAT")
 
-        # Check if the project exists
         project = db.query(Project).filter(Project.id == uuid_obj).first()
         if project is None:
-            raise HTTPException(status_code=404, detail="Project not found")
+            raise ProjectException(status_code=404, error_key="PROJECT_NOT_FOUND")
 
         # Delete all related prompts
         delete_prompts_query = text(
@@ -183,7 +188,6 @@ def delete_project(project_id: str, db: Session = Depends(get_db)):
         )
         db.execute(delete_prompts_query, {"project_id": str(uuid_obj)})
 
-        # Delete all related prompt templates
         delete_prompt_templates_query = text(
             "DELETE FROM prompt_template WHERE project_id = :project_id"
         )
@@ -193,12 +197,15 @@ def delete_project(project_id: str, db: Session = Depends(get_db)):
         
         db.commit()
         return {"message": "Project and all related data deleted successfully"}
+    except ProjectException as pe:
+        db.rollback()
+        raise pe
     except SQLAlchemyError as e:
         db.rollback()
-        raise HTTPException(status_code=500, error_key="DATABASE_ERROR", detail=str(e))
+        raise ProjectException(status_code=500, error_key="DATABASE_ERROR", detail=str(e))
     except Exception as e:
         db.rollback()
-        raise HTTPException(
+        raise ProjectException(
             status_code=500,
             error_key="UNEXPECTED_ERROR",
             detail=str(e)
