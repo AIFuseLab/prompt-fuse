@@ -3,9 +3,9 @@ from sqlalchemy import func
 from ..db.database import Base
 import uuid
 from fastapi import HTTPException
-from ..exceptions.error_messages import ErrorMessages
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
+from ..utils.exceptions.errors import get_error_message
 
 class Project(Base):
     __tablename__ = "projects"
@@ -21,7 +21,11 @@ class Project(Base):
 
 class ProjectException(HTTPException):
     def __init__(self, status_code: int, error_key: str, detail: str = None):
-        detail = getattr(ErrorMessages, error_key, ErrorMessages.UNEXPECTED_ERROR)
+        error_message = get_error_message(error_key)
+        content = {
+            "error_key": error_key,
+            "message": error_message
+        }
         if detail is not None:
-            detail = f"{detail}: {detail}"
-        super().__init__(status_code=status_code, detail=detail)
+            content["detail"] = detail
+        super().__init__(status_code=status_code, detail=content)

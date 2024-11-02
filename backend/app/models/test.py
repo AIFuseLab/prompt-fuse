@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 from ..db.database import Base
 import uuid
 from datetime import datetime
+from ..utils.exceptions.errors import get_error_message
 
 test_prompt_association = Table('test_prompt_association', Base.metadata,
     Column('test_id', UUID(as_uuid=True), ForeignKey('tests.id')),
@@ -32,5 +33,7 @@ class TestException(Exception):
     def __init__(self, status_code: int, error_key: str, detail: str = None):
         self.status_code = status_code
         self.error_key = error_key
-        self.detail = detail
+        self.detail = get_error_message(error_key)
+        if detail:
+            self.detail = f"{self.detail}: {detail}"
 

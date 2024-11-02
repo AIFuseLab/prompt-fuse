@@ -1,10 +1,10 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 from typing import Optional
+
 class ProjectCreate(BaseModel):
     name: str
     description: str
-
 
 class ProjectUpdate(BaseModel):
     name: Optional[str] = None
@@ -17,5 +17,4 @@ class ProjectResponse(BaseModel):
     creation_date: datetime
     last_updated: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
