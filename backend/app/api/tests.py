@@ -200,25 +200,43 @@ async def create_test(
 @router.get("/test/{test_id}", response_model=TestResponse)
 def read_test(test_id: str, db: Session = Depends(get_db)):
     try:
-        test = db.query(Test).filter(Test.id == uuid.UUID(test_id)).first()
+        # Validate UUID format
+        try:
+            test_uuid = uuid.UUID(test_id)
+        except ValueError:
+            raise TestException(
+                status_code=400,
+                error_key="INVALID_TEST_ID_FORMAT"
+            )
+        
+        # Query the test using the validated UUID
+        test = db.query(Test).filter(Test.id == test_uuid).first()
         if test is None:
-            raise TestException(status_code=404, error_key="TEST_NOT_FOUND")
+            raise TestException(
+                status_code=404,
+                error_key="TEST_NOT_FOUND"
+            )
+            
         return TestResponse.from_orm(test)
-    except ValueError:
-        raise TestException(status_code=400, error_key="INVALID_TEST_ID_FORMAT")
-    except sqlalchemy.exc.SQLAlchemyError as e:
-        raise TestException(status_code=500, error_key="DATABASE_ERROR")
+        
+    except TestException as te:
+        raise te
     except Exception as e:
         raise TestException(
             status_code=500,
-            error_key="UNEXPECTED_ERROR",
-            detail=f"{ErrorMessages.UNEXPECTED_ERROR}: {str(e)}",
+            error_key="INTERNAL_ERROR",
+            detail=str(e)
         )
 
 
 @router.put("/tests/{test_id}", response_model=TestResponse)
 def update_test(test_id: str, test: TestUpdate, db: Session = Depends(get_db)):
     try:
+        try:
+            uuid.UUID(test_id)
+        except ValueError:
+            raise TestException(status_code=400, error_key="INVALID_TEST_ID_FORMAT")
+        
         db_test = db.query(Test).filter(Test.id == uuid.UUID(test_id)).first()
         if db_test is None:
             raise TestException(status_code=404, error_key="TEST_NOT_FOUND")
@@ -246,6 +264,11 @@ def update_test(test_id: str, test: TestUpdate, db: Session = Depends(get_db)):
 @router.delete("/test/{test_id}/prompt/{prompt_id}", response_model=dict)
 def delete_test(test_id: str, prompt_id: str, db: Session = Depends(get_db)):
     try:
+        try:
+            uuid.UUID(test_id)
+        except ValueError:
+            raise TestException(status_code=400, error_key="INVALID_TEST_ID_FORMAT")
+        
         db_test = db.query(Test).filter(Test.id == uuid.UUID(test_id)).first()
         if db_test is None:
             return {"message": "Test not found"}
@@ -296,6 +319,11 @@ def delete_test(test_id: str, prompt_id: str, db: Session = Depends(get_db)):
 @router.get("/tests/{prompt_id}", response_model=List[TestResponse])
 def list_tests(prompt_id: str, db: Session = Depends(get_db)):
     try:
+        try:
+            uuid.UUID(prompt_id)
+        except ValueError:
+            raise TestException(status_code=400, error_key="INVALID_PROMPT_ID_FORMAT")
+        
         uuid_prompt_id = uuid.UUID(prompt_id)
         tests = (
             db.query(Test)

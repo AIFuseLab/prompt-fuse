@@ -5,6 +5,7 @@ from ..db.database import Base
 import uuid
 from datetime import datetime
 from ..utils.exceptions.errors import get_error_message
+from fastapi import HTTPException
 
 test_prompt_association = Table('test_prompt_association', Base.metadata,
     Column('test_id', UUID(as_uuid=True), ForeignKey('tests.id')),
@@ -29,7 +30,7 @@ class Test(Base):
 
     prompts = relationship("Prompt", secondary=test_prompt_association, back_populates="tests")
 
-class TestException(Exception):
+class TestException(HTTPException):
     def __init__(self, status_code: int, error_key: str, detail: str = None):
         error_message = get_error_message(error_key)
         content = {
