@@ -156,3 +156,5 @@ def test_create_project_empty_name(client):
     assert response_data["error_key"] == "PROJECT_NAME_EMPTY"
     assert get_error_message("PROJECT_NAME_EMPTY") in response_data["message"]
     
+
+# Test Delete Entire Project

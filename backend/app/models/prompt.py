@@ -6,6 +6,7 @@ import uuid
 from datetime import datetime
 from ..utils.exceptions.errors import get_error_message
 from .test import test_prompt_association
+from fastapi import HTTPException
 
 class Prompt(Base):
     __tablename__ = "prompts"
@@ -23,7 +24,7 @@ class Prompt(Base):
     prompt_template = relationship("PromptTemplate", back_populates="prompts")
     tests = relationship("Test", secondary=test_prompt_association, back_populates="prompts")
 
-class PromptException(Exception):
+class PromptException(HTTPException):
     def __init__(self, status_code: int, error_key: str, detail: str = None):
         error_message = get_error_message(error_key)
         content = {

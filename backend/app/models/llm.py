@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 from ..db.database import Base
 import uuid
 from ..utils.exceptions.errors import get_error_message
+from fastapi import HTTPException
 
 class LLM(Base):
     __tablename__ = "llm"
@@ -17,7 +18,7 @@ class LLM(Base):
     aws_region = Column(String(100))
     prompts = relationship("Prompt", back_populates="llm")
 
-class LLMException(Exception):
+class LLMException(HTTPException):
     def __init__(self, status_code: int, error_key: str, detail: str = None):
         error_message = get_error_message(error_key)
         content = {
