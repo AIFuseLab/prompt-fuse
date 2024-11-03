@@ -30,7 +30,7 @@ def create_project(project: ProjectCreate, db: Session = Depends(get_db)):
         db.add(db_project)
         db.commit()
         db.refresh(db_project)
-
+        
         return ProjectResponse(
             id=str(db_project.id),
             name=db_project.name,

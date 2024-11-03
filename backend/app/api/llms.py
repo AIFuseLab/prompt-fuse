@@ -210,6 +210,7 @@ async def converse_with_llm(
         if llm is None:
             raise LLMException(status_code=404, error_key="LLM_NOT_FOUND")
         
+        
         bedrock = boto3.client(
             aws_access_key_id=llm.access_key,
             aws_secret_access_key=llm.secret_access_key,
@@ -217,7 +218,7 @@ async def converse_with_llm(
             region_name=llm.aws_region,
         )
 
-        try:
+        try:            
             response = bedrock.converse(
                 modelId=llm.llm_model_id,
                 messages=[
@@ -230,9 +231,10 @@ async def converse_with_llm(
                 inferenceConfig={
                     "temperature": conversation_input.temperature,
                     "maxTokens": conversation_input.max_tokens,
-                    "topP": conversation_input.top_p,
+                    "topP": conversation_input.top_p
                 },
             )
+            print("response: ",response)
             return {"response": response}
         except Exception as e:
             raise LLMException(
