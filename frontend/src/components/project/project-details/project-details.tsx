@@ -55,7 +55,7 @@ function ProjectDetails() {
         );
         setProject(response.data);
       } catch (error: any) {
-        toast.error(error?.response?.data?.detail);
+        toast.error(error?.response?.data?.message);
       }
     };
 
@@ -71,7 +71,7 @@ function ProjectDetails() {
       setPromptTemplates(response.data.reverse());
     } catch (error: any) {
       toast.error(
-        error?.response?.data?.detail || "Failed to fetch prompt templates"
+        error?.response?.data?.message || "Failed to fetch prompt templates"
       );
     }
   }, [projectId]);
@@ -107,7 +107,7 @@ function ProjectDetails() {
         await fetchProjectPrompts();
         toast.success("Prompt template deleted successfully");
       } catch (error: any) {
-        toast.error(error?.response?.data?.detail);
+        toast.error(error?.response?.data?.message);
       }
     }
     setIsDeleteConfirmationOpen(false);

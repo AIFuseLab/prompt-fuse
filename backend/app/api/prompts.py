@@ -160,8 +160,9 @@ def list_prompts(prompt_template_id: str, db: Session = Depends(get_db)):
         
         prompts = db.query(Prompt).filter(Prompt.prompt_template_id == prompt_template_uuid).all()
         for prompt in prompts:
-            prompt.llm_model_name = db.query(LLM).filter(LLM.id == prompt.llm_id).first().name
-            
+            llm = db.query(LLM).filter(LLM.id == prompt.llm_id).first()
+            prompt.llm_model_name = llm.name if llm else None
+                        
         return [PromptResponse.from_orm(prompt) for prompt in prompts]
     except ValueError:
         raise PromptException(status_code=400, error_key="INVALID_PROMPT_TEMPLATE_ID_FORMAT")
