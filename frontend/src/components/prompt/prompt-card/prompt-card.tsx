@@ -218,7 +218,7 @@ const PromptCard: React.FC<PromptCardProps> = ({
                         dangerouslySetInnerHTML={{
                           __html: `${test?.llm_response
                             ?.substring(0, 290)
-                            .replace(/\n/g, "<br>")}${
+                            ?.replace(/\n/g, "<br>")}${
                             test?.llm_response?.length! > 290 ? "..." : ""
                           }`,
                         }}

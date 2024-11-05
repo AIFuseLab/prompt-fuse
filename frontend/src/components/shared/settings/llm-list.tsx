@@ -32,7 +32,7 @@ const LLMList: React.FC = () => {
       setLLMs(response.data);
       setLoading(false);
     } catch (error: any) {
-      toast.error(error?.response?.data?.detail);
+      toast.error(error?.response?.data?.message);
       setError('Failed to fetch LLMs');
       setLoading(false);
     }
@@ -44,7 +44,7 @@ const LLMList: React.FC = () => {
       fetchLLMs();
       toast.success('LLM deleted successfully');
     } catch (error: any) {
-      toast.error(error?.response?.data?.detail);
+      toast.error(error?.response?.data?.message);
       setError('Failed to delete LLM');
     }
   };
@@ -56,7 +56,7 @@ const LLMList: React.FC = () => {
       fetchLLMs();
       toast.success('LLM updated successfully');
     } catch (error: any) {
-      toast.error(error?.response?.data?.detail);
+      toast.error(error?.response?.data?.message);
       setError('Failed to update LLM');
     }
   };

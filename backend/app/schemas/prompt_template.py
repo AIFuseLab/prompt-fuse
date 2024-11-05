@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional
 from uuid import UUID
 from datetime import datetime
@@ -22,6 +22,4 @@ class PromptTemplateResponse(BaseModel):
     number_of_prompts: int
     project_id: Optional[UUID]
 
-    class Config:
-        from_attributes = True
-
+    model_config = ConfigDict(from_attributes=True) 

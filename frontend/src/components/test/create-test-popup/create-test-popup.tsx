@@ -94,7 +94,6 @@ function CreateTestPopup({ isOpen, onClose, prompts }: CreateTestPopupProps) {
     let response = null;
     try {
       if (test.input_type === "text") {
-
         response = await fetch(`${API_BASE_URL}/test/text`, {
           method: "POST",
           headers: {
@@ -108,7 +107,6 @@ function CreateTestPopup({ isOpen, onClose, prompts }: CreateTestPopupProps) {
           }),
         });
       } else {
-
         const formData = new FormData();
         formData.append('test_name', test.name);
         formData.append('prompt_ids', JSON.stringify(test.prompt_id));
@@ -116,7 +114,6 @@ function CreateTestPopup({ isOpen, onClose, prompts }: CreateTestPopupProps) {
         if (imageFile) {
           formData.append('image_input', imageFile);
         }
-  
         response = await fetch(`${API_BASE_URL}/test/image`, {
           method: "POST",
           body: formData,
@@ -124,14 +121,13 @@ function CreateTestPopup({ isOpen, onClose, prompts }: CreateTestPopupProps) {
       }
 
       if (!response?.ok) {
-        toast.error("Error creating test");
+        toast.error("Failed to create test");
         throw new Error("Failed to create test");
       }
-
       toast.success("Test created successfully");
       onClose();
-    } catch (error) {
-      toast.error("Error creating test");
+    } catch (error: any) {
+      toast.error(error?.message);
     } finally {
       setIsLoading(false);
     }

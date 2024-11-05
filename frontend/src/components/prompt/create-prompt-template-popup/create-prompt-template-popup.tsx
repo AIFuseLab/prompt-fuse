@@ -66,7 +66,7 @@ function CreatePromptTemplatePopup({
       onClose();
       toast.success('Prompt template created successfully');
     } catch (error: any) {
-      toast.error(error?.response?.data?.detail);
+      toast.error(error?.response?.data?.message);
     }
   };
 
@@ -86,7 +86,7 @@ function CreatePromptTemplatePopup({
       toast.success('Prompt template updated successfully');
       onClose();
     } catch (error: any) {
-      toast.error(error?.response?.data?.detail);
+      toast.error(error?.response?.data?.message);
     }
   };
 

@@ -17,3 +17,8 @@ boto3
 python-dotenv
 gpt3_tokenizer
 python-multipart
+pytest==7.4.3
+httpx==0.25.2
+pytest-asyncio==0.21.1
+ollama
+litellm

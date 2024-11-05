@@ -21,7 +21,6 @@ import base64
 
 router = APIRouter()
 
-
 @router.post("/test/text", response_model=TestResponse)
 async def create_test(test: TestCreate, db: Session = Depends(get_db)):
     try:
@@ -30,25 +29,34 @@ async def create_test(test: TestCreate, db: Session = Depends(get_db)):
 
         db.add(db_test)
         db.flush()
-
+        
         prompts = db.query(Prompt).filter(Prompt.id.in_(test.prompt_ids)).all()
+        
+        print("prompts: ",prompts[0].id)
+        print("prompts: ",prompts[0].prompt)
+        print("prompts[0].llm_id: ",prompts[0].llm_id)
 
 
         if len(prompts) != len(test.prompt_ids):
             raise TestException(status_code=400, error_key="INVALID_PROMPT_IDS")
 
-        for prompt in prompts:
-            
+        for prompt in prompts:            
             conversation_input = ConversationInput(
                 llm_id=prompt.llm_id,
                 user_input=test.user_input,
                 prompt=prompt.prompt,
             )
 
+            try:
+                llm_response = await converse_with_llm(conversation_input, db)
+            except Exception as e:
+                raise LLMException(
+                    status_code=500,
+                    error_key="CONVERSATION_ERROR"
+                )
             
-            llm_response = await converse_with_llm(conversation_input, db)
-
-
+            print("llm_response", llm_response)
+            
             try:
                 association = db.execute(
                     test_prompt_association.insert().values(
@@ -63,13 +71,11 @@ async def create_test(test: TestCreate, db: Session = Depends(get_db)):
                         user_input_tokens=gpt3_tokenizer.count_tokens(test.user_input),
                     )
                 )
-                print(f"Association inserted")
                 db.flush()
             except Exception as e:
                 raise LLMException(
                     status_code=500,
-                    error_key="CONVERSATION_ERROR",
-                    detail=f"Model invocation error: {str(e)}",
+                    error_key="CONVERSATION_ERROR"
                 )
 
         db.commit()
@@ -82,15 +88,16 @@ async def create_test(test: TestCreate, db: Session = Depends(get_db)):
         raise te
     except sqlalchemy.exc.IntegrityError as e:
         db.rollback()
-        raise HTTPException(
+        raise TestException(
             status_code=500,
-            detail="An error occurred while creating the test: Database integrity error",
+            error_key="DATABASE_ERROR",
+            detail=str(e),
         )
     except Exception as e:
         db.rollback()
-        raise HTTPException(
+        raise TestException(
             status_code=500,
-            detail=f"An error occurred while creating the test: {str(e)}",
+            error_key="CONVERSATION_ERROR",
         )
 
 
@@ -106,12 +113,12 @@ async def create_test(
 ):
     try:
         if image_input is None or image_input.file is None:
-            raise HTTPException(status_code=400, detail="No image file provided")
+            raise TestException(status_code=400, error_key="NO_IMAGE_FILE_PROVIDED")
 
         image_content = await image_input.read()
 
         if not image_content:
-            raise HTTPException(status_code=400, detail="Image content is empty")
+            raise TestException(status_code=400, error_key="IMAGE_CONTENT_EMPTY")
 
         # db_test = Test(test_name=test_name, image=image_input.file.read())
         # db.add(db_test)
@@ -132,7 +139,7 @@ async def create_test(
             raise LLMException(
                 status_code=500,
                 error_key="CONVERSATION_ERROR",
-                detail=f"Model invocation error: {str(e)}",
+                detail=str(e),
             )
 
 
@@ -171,7 +178,7 @@ async def create_test(
                 raise LLMException(
                     status_code=500,
                     error_key="CONVERSATION_ERROR",
-                    detail=f"Model invocation error: {str(e)}",
+                    detail=str(e),
                 )
         
 
@@ -186,40 +193,60 @@ async def create_test(
         raise te
     except sqlalchemy.exc.IntegrityError as e:
         db.rollback()
-        raise HTTPException(
+        raise TestException(
             status_code=500,
-            detail="An error occurred while creating the test: Database integrity error",
+            error_key="DATABASE_ERROR",
+            detail=str(e),
         )
     except Exception as e:
         db.rollback()
         raise HTTPException(
             status_code=500,
-            detail=f"An error occurred while creating the test: {str(e)}",
+            error_key="UNEXPECTED_ERROR",
+            detail=str(e),
         )
 
 
 @router.get("/test/{test_id}", response_model=TestResponse)
 def read_test(test_id: str, db: Session = Depends(get_db)):
     try:
-        test = db.query(Test).filter(Test.id == uuid.UUID(test_id)).first()
+        # Validate UUID format
+        try:
+            test_uuid = uuid.UUID(test_id)
+        except ValueError:
+            raise TestException(
+                status_code=400,
+                error_key="INVALID_TEST_ID_FORMAT"
+            )
+        
+        # Query the test using the validated UUID
+        test = db.query(Test).filter(Test.id == test_uuid).first()
         if test is None:
-            raise TestException(status_code=404, error_key="TEST_NOT_FOUND")
+            raise TestException(
+                status_code=404,
+                error_key="TEST_NOT_FOUND"
+            )
+            
         return TestResponse.from_orm(test)
-    except ValueError:
-        raise TestException(status_code=400, error_key="INVALID_TEST_ID_FORMAT")
-    except sqlalchemy.exc.SQLAlchemyError as e:
-        raise TestException(status_code=500, error_key="DATABASE_ERROR")
+        
+    except TestException as te:
+        raise te
     except Exception as e:
         raise TestException(
             status_code=500,
-            error_key="UNEXPECTED_ERROR",
-            detail=f"{ErrorMessages.UNEXPECTED_ERROR}: {str(e)}",
+            error_key="INTERNAL_ERROR",
+            detail=str(e)
         )
 
 
 @router.put("/tests/{test_id}", response_model=TestResponse)
 def update_test(test_id: str, test: TestUpdate, db: Session = Depends(get_db)):
     try:
+        try:
+            uuid.UUID(test_id)
+        except ValueError:
+            raise TestException(status_code=400, error_key="INVALID_TEST_ID_FORMAT")
+        
         db_test = db.query(Test).filter(Test.id == uuid.UUID(test_id)).first()
         if db_test is None:
             raise TestException(status_code=404, error_key="TEST_NOT_FOUND")
@@ -240,13 +267,18 @@ def update_test(test_id: str, test: TestUpdate, db: Session = Depends(get_db)):
         raise TestException(
             status_code=500,
             error_key="UNEXPECTED_ERROR",
-            detail=f"{ErrorMessages.UNEXPECTED_ERROR}: {str(e)}",
+            detail=str(e),
         )
 
 
 @router.delete("/test/{test_id}/prompt/{prompt_id}", response_model=dict)
 def delete_test(test_id: str, prompt_id: str, db: Session = Depends(get_db)):
     try:
+        try:
+            uuid.UUID(test_id)
+        except ValueError:
+            raise TestException(status_code=400, error_key="INVALID_TEST_ID_FORMAT")
+        
         db_test = db.query(Test).filter(Test.id == uuid.UUID(test_id)).first()
         if db_test is None:
             return {"message": "Test not found"}
@@ -290,13 +322,18 @@ def delete_test(test_id: str, prompt_id: str, db: Session = Depends(get_db)):
         raise TestException(
             status_code=500,
             error_key="UNEXPECTED_ERROR",
-            detail=f"{ErrorMessages.UNEXPECTED_ERROR}: {str(e)}",
+            detail=str(e),
         )
 
 
 @router.get("/tests/{prompt_id}", response_model=List[TestResponse])
 def list_tests(prompt_id: str, db: Session = Depends(get_db)):
     try:
+        try:
+            uuid.UUID(prompt_id)
+        except ValueError:
+            raise TestException(status_code=400, error_key="INVALID_PROMPT_ID_FORMAT")
+        
         uuid_prompt_id = uuid.UUID(prompt_id)
         tests = (
             db.query(Test)
@@ -347,5 +384,5 @@ def list_tests(prompt_id: str, db: Session = Depends(get_db)):
         raise TestException(
             status_code=500,
             error_key="UNEXPECTED_ERROR",
-            detail=f"{ErrorMessages.UNEXPECTED_ERROR}: {str(e)}",
+            detail=str(e),
         )

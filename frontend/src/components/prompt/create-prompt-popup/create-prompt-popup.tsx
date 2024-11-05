@@ -58,7 +58,7 @@ function CreatePromptPopup({
         const response = await axios.get<LLM[]>(`${API_BASE_URL}/llms`);
         setAvailableLLMs(response.data);
       } catch (error: any) {
-        toast.error(error?.response?.data?.detail);
+        toast.error(error?.response?.data?.message);
       }
     };
 
@@ -103,7 +103,7 @@ function CreatePromptPopup({
       onClose();
       toast.success('Prompt created successfully');
     } catch (error: any) {
-      toast.error(error?.response?.data?.detail);
+      toast.error(error?.response?.data?.message);
     }
   };
 
@@ -126,7 +126,7 @@ function CreatePromptPopup({
       onClose();
       toast.success('Prompt updated successfully');
     } catch (error: any) {
-      toast.error(error?.response?.data?.detail || "An error occurred while updating the prompt");
+      toast.error(error?.response?.data?.message || "An error occurred while updating the prompt");
     }
   };
 

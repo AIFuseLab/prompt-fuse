@@ -38,7 +38,7 @@ function Projects() {
       const response = await axios.get<Project[]>(`${API_BASE_URL}/projects`);
       setProjects(response.data);
     } catch (error: any) {
-      toast.error(error?.response?.data?.detail);
+      toast.error(error?.response?.data?.message);
     }
   };
 
@@ -48,7 +48,7 @@ function Projects() {
       setProjects(projects.filter((p) => p.id !== id));
       toast.success('Project deleted successfully');
     } catch (error: any) {
-      toast.error(error?.response?.data?.detail);
+      toast.error(error?.response?.data?.message);
     }
     fetchProjects();
   };

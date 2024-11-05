@@ -12,7 +12,8 @@ class ErrorMessages:
     PROJECT_LIST_ERROR = "An error occurred while listing the projects"
     PROJECT_GET_ERROR = "An error occurred while getting the project"
     PROJECT_DELETION_ERROR = "An error occurred while deleting the project"
-    
+    PROJECT_NAME_EMPTY = "Project name cannot be empty"
+    PROMPT_TEMPLATE_NAME_EXISTS = "A prompt template with this name already exists"
     
     PROMPT_NAME_EXISTS = "A prompt with this name already exists"
     PROMPT_CREATION_ERROR = "An error occurred while creating the prompt"
@@ -31,7 +32,8 @@ class ErrorMessages:
     LLM_DELETION_ERROR = "An error occurred while deleting the LLM"
 
     CONVERSATION_ERROR = "An error occurred during the conversation with the LLM"
-
+    AWS_API_ERROR = "An error occurred while calling the AWS API"
+    
     TEST_NAME_EXISTS = "A test with this name already exists"
     TEST_CREATION_ERROR = "An error occurred while creating the test"
     TEST_DELETION_ERROR = "An error occurred while deleting the test"
@@ -50,3 +52,9 @@ class ErrorMessages:
     LLM_TOOL_NOT_FOUND = "LLM tool not found"
     INVALID_LLM_TOOL_ID_FORMAT = "Invalid LLM tool ID format"
     
+    
+    INVALID_PROMPT_TEMPLATE_NAME="Invalid prompt template name"
+    NO_IMAGE_FILE_PROVIDED="No image file provided"
+    IMAGE_CONTENT_EMPTY="Image content is empty",
+    CONVERSATION_ERROR="An error occurred during the conversation with the LLM"
+    NO_IMAGE_PROVIDED="No image provided"

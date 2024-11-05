@@ -88,7 +88,7 @@ const PromptDetails: React.FC = () => {
         setPromptTemplate(response.data);
       } catch (error: any) {
         toast.error(
-          error?.response?.data?.detail ||
+          error?.response?.data?.message ||
             "Failed to fetch prompt template details"
         );
       }
@@ -135,7 +135,7 @@ const PromptDetails: React.FC = () => {
         toast.success('Prompt deleted successfully');
         // await fetchProjectPrompts();
       } catch (error: any) {
-        toast.error(error?.response?.data?.detail);
+        toast.error(error?.response?.data?.message);
       }
     }
     setIsDeleteConfirmationOpen(false);

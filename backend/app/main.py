@@ -2,9 +2,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .api import projects, llms, prompt_templates, prompts, tests
 from .db.database import engine, Base
-from .exceptions.handlers import project_exception_handler
+from .exceptions.handlers import project_exception_handler, prompt_template_exception_handler, prompt_exception_handler, llm_exception_handler, test_exception_handler
 from .models.project import ProjectException
-from .models.test import Test
+from .models.prompt_template import PromptTemplateException
+from .models.prompt import PromptException
+from .models.llm import LLMException
+from .models.test import TestException
+
 app = FastAPI()
 
 app.add_middleware(
@@ -28,3 +32,7 @@ async def root():
     return {"message": "Welcome to the Prompt Management System API"}
 
 app.add_exception_handler(ProjectException, project_exception_handler)
+app.add_exception_handler(PromptTemplateException, prompt_template_exception_handler)
+app.add_exception_handler(PromptException, prompt_exception_handler)
+app.add_exception_handler(LLMException, llm_exception_handler)
+app.add_exception_handler(TestException, test_exception_handler)
