@@ -16,7 +16,7 @@ class PromptUpdate(BaseModel):
     prompt: Optional[str] = None
     notes: Optional[str] = None
     version: Optional[float] = None
-    llm_id: Optional[UUID] = None
+    llm_id: Optional[UUID | str] = None
     prompt_template_id: Optional[UUID] = None
 
 class PromptResponse(BaseModel):
