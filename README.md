@@ -1,5 +1,4 @@
 # Prompt Fuse (v0.0.2)
-
 Prompt Fuse is an open-source tool for managing, testing, and automatically versioning LLM prompts. With Prompt Fuse developers can easily organize prompts, track versions, and experiment with individual prompt tests, all through a streamlined interface.
 
 ## Features
