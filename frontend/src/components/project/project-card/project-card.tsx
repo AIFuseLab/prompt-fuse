@@ -1,14 +1,8 @@
 import React from "react";
 import { Edit2, Trash2 } from "lucide-react";
 import styles from "./project-card.module.css";
+import { Project } from "../../../interfaces/interfaces";
 
-interface Project {
-  id: number;
-  name: string;
-  description: string;
-  creation_date: string;
-  last_updated: string;
-}
 
 interface ProjectCardProps {
   project_com: Project;
