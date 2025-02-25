@@ -9,17 +9,8 @@ import ConfirmationPopup from "../../shared/delete-confirmation/delete-confirmat
 import CreatePromptTemplatePopup from "../../prompt/create-prompt-template-popup/create-prompt-template-popup";
 import { toast } from "react-toastify";
 import { API_BASE_URL } from "../../../config";
-import { ChevronUp, ChevronDown, Terminal, SquareFunction, Edit, Trash2 } from "lucide-react";
-
-interface IPromptTemplate {
-  id: string;
-  name: string;
-  description: string | null;
-  creation_date: string;
-  updated_at: string;
-  number_of_prompts: number;
-  project_id: string | null;
-}
+import { Terminal } from "lucide-react";
+import { IPromptTemplate } from "../../../interfaces/interfaces";
 
 function ProjectDetails() {
   const { projectId } = useParams<{ projectId: string }>();
