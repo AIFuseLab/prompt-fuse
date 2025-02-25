@@ -2,10 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from ..db.database import get_db
 from ..models.project import Project, ProjectException
-from ..models.prompt_template import PromptTemplate
 from ..schemas.project import ProjectCreate, ProjectResponse, ProjectUpdate
 import sqlalchemy
-from ..exceptions.error_messages import ErrorMessages
 from typing import List
 import uuid
 from sqlalchemy import text
