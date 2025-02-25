@@ -19,14 +19,11 @@ class Logger:
 
     def _setup_logger(self):
         """Sets up the logger with a file and console handler."""
-        # Ensure log directory exists
         if not os.path.exists(self.log_dir):
             os.makedirs(self.log_dir)
 
-        # Set log file name based on the current date
         log_filename = os.path.join(self.log_dir, f"{datetime.now().strftime('%Y-%m-%d')}.log")
 
-        # Formatter for log messages
         log_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
         # File handler
